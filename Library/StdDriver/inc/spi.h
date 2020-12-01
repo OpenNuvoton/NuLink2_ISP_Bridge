@@ -3,7 +3,8 @@
  * @version  V3.00
  * @brief    M480 series SPI driver header file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef __SPI_H__
 #define __SPI_H__
@@ -81,17 +82,6 @@ extern "C"
 #define SPII2S_MODE_SLAVE          SPI_I2SCTL_SLAVE_Msk               /*!< As slave mode \hideinitializer */
 #define SPII2S_MODE_MASTER         (0U)                               /*!< As master mode \hideinitializer */
 
-/* I2S TX FIFO Threshold */
-#define SPII2S_FIFO_TX_LEVEL_WORD_0    (0U)                            /*!< TX threshold is 0 word \hideinitializer */
-#define SPII2S_FIFO_TX_LEVEL_WORD_1    (1U << SPI_FIFOCTL_TXTH_Pos)    /*!< TX threshold is 1 word \hideinitializer */
-#define SPII2S_FIFO_TX_LEVEL_WORD_2    (2U << SPI_FIFOCTL_TXTH_Pos)    /*!< TX threshold is 2 words \hideinitializer */
-#define SPII2S_FIFO_TX_LEVEL_WORD_3    (3U << SPI_FIFOCTL_TXTH_Pos)    /*!< TX threshold is 3 words \hideinitializer */
-/* I2S RX FIFO Threshold */
-#define SPII2S_FIFO_RX_LEVEL_WORD_1    (0U)                            /*!< RX threshold is 1 word \hideinitializer */
-#define SPII2S_FIFO_RX_LEVEL_WORD_2    (1U << SPI_FIFOCTL_RXTH_Pos)    /*!< RX threshold is 2 words \hideinitializer */
-#define SPII2S_FIFO_RX_LEVEL_WORD_3    (2U << SPI_FIFOCTL_RXTH_Pos)    /*!< RX threshold is 3 words \hideinitializer */
-#define SPII2S_FIFO_RX_LEVEL_WORD_4    (3U << SPI_FIFOCTL_RXTH_Pos)    /*!< RX threshold is 4 words \hideinitializer */
-
 /* I2S Record Channel */
 #define SPII2S_MONO_RIGHT          (0U)                               /*!< Record mono right channel \hideinitializer */
 #define SPII2S_MONO_LEFT           SPI_I2SCTL_RXLCH_Msk               /*!< Record mono left channel \hideinitializer */
@@ -144,6 +134,15 @@ extern "C"
 #define SPI_TRIGGER_TX_PDMA(spi)   ((spi)->PDMACTL |= SPI_PDMACTL_TXPDMAEN_Msk)
 
 /**
+  * @brief      Trigger TX and RX PDMA function.
+  * @param[in]  spi The pointer of the specified SPI module.
+  * @return     None.
+  * @details    Set TXPDMAEN bit and RXPDMAEN bit of SPI_PDMACTL register to enable TX and RX PDMA transfer function.
+  * \hideinitializer
+  */
+#define SPI_TRIGGER_TX_RX_PDMA(spi)   ((spi)->PDMACTL |= (SPI_PDMACTL_TXPDMAEN_Msk | SPI_PDMACTL_RXPDMAEN_Msk))
+
+/**
   * @brief      Disable RX PDMA transfer.
   * @param[in]  spi The pointer of the specified SPI module.
   * @return     None.
@@ -160,6 +159,15 @@ extern "C"
   * \hideinitializer
   */
 #define SPI_DISABLE_TX_PDMA(spi) ( (spi)->PDMACTL &= ~SPI_PDMACTL_TXPDMAEN_Msk )
+
+/**
+  * @brief      Disable TX and RX PDMA transfer.
+  * @param[in]  spi The pointer of the specified SPI module.
+  * @return     None.
+  * @details    Clear TXPDMAEN bit and RXPDMAEN bit of SPI_PDMACTL register to disable TX and RX PDMA transfer function.
+  * \hideinitializer
+  */
+#define SPI_DISABLE_TX_RX_PDMA(spi) ( (spi)->PDMACTL &= ~(SPI_PDMACTL_TXPDMAEN_Msk | SPI_PDMACTL_RXPDMAEN_Msk) )
 
 /**
   * @brief      Get the count of available data in RX FIFO.

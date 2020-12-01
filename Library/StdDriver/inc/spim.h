@@ -3,7 +3,8 @@
  * @version V1.00
  * @brief   M480 series SPIM driver header file
  *
- * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef __SPIM_H__
 #define __SPIM_H__
@@ -615,6 +616,8 @@ void SPIM_EnterDirectMapMode(int is4ByteAddr, uint32_t u32RdCmd, uint32_t u32Idl
 void SPIM_ExitDirectMapMode(void);
 
 void SPIM_SetQuadEnable(int isEn, uint32_t u32NBit);
+
+void SPIM_WinbondUnlock(uint32_t u32NBit);
 
 /*@}*/ /* end of group SPIM_EXPORTED_FUNCTIONS */
 

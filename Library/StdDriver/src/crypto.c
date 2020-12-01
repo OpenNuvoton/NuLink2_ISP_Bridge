@@ -3,7 +3,8 @@
  * @version  V1.10
  * @brief  Cryptographic Accelerator driver source file
  *
- * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>
@@ -376,7 +377,11 @@ void SHA_Open(CRPT_T *crpt, uint32_t u32OpMode, uint32_t u32SwapType, uint32_t h
     if (hmac_key_len != 0UL)
     {
         crpt->HMAC_KEYCNT = hmac_key_len;
-        crpt->HMAC_CTL |= CRPT_HMAC_CTL_HMACEN_Msk;
+
+        if ((SYS->CSERVER & SYS_CSERVER_VERSION_Msk) == 0x0)
+            crpt->HMAC_CTL |= (1<<4);   /* M480MD HMACEN is CRYPTO_HMAC_CTL[4] */
+        else
+            crpt->HMAC_CTL |= (1<<11);  /* M480LD HMACEN is CRYPTO_HMAC_CTL[11] */
     }
 }
 

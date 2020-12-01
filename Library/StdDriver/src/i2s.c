@@ -3,7 +3,8 @@
  * @version  V0.10
  * @brief    M480 I2S driver source file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>
@@ -95,7 +96,8 @@ uint32_t I2S_Open(I2S_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate, u
     SYS->IPRST1 |= SYS_IPRST1_I2S0RST_Msk;
     SYS->IPRST1 &= ~SYS_IPRST1_I2S0RST_Msk;
 
-    i2s->CTL0 = u32MasterSlave | u32WordWidth | u32MonoData | u32DataFormat | I2S_FIFO_TX_LEVEL_WORD_8 | I2S_FIFO_RX_LEVEL_WORD_8;
+    i2s->CTL0 = u32MasterSlave | u32WordWidth | u32MonoData | u32DataFormat;
+    i2s->CTL1 = I2S_FIFO_TX_LEVEL_WORD_8 | I2S_FIFO_RX_LEVEL_WORD_8;
 
     u32SrcClk = I2S_GetSourceClockFreq(i2s);
 

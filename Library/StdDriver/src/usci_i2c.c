@@ -3,7 +3,8 @@
  * @version  V3.00
  * @brief    M480 series USCI I2C(UI2C) driver source file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 
@@ -942,7 +943,7 @@ uint8_t UI2C_WriteByteTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t u16Dat
 
             if (u32txLen == 0U)
             {
-                UI2C_SET_DATA(ui2c, (uint8_t)(u16DataAddr & 0xFF00U) >> 8U);  /* Write Hi byte data address to UI2C_TXDAT */
+                UI2C_SET_DATA(ui2c, (uint8_t)((u16DataAddr & 0xFF00U) >> 8U));  /* Write Hi byte data address to UI2C_TXDAT */
                 u32txLen++;
             }
             else if (u32txLen == 1U)
@@ -1029,7 +1030,7 @@ uint32_t UI2C_WriteMultiBytesTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t
 
             if (eEvent == MASTER_SEND_ADDRESS)
             {
-                UI2C_SET_DATA(ui2c, (uint8_t)(u16DataAddr & 0xFF00U) >> 8U);  /* Write Hi byte data address to UI2C_TXDAT */
+                UI2C_SET_DATA(ui2c, (uint8_t)((u16DataAddr & 0xFF00U) >> 8U));  /* Write Hi byte data address to UI2C_TXDAT */
                 eEvent = MASTER_SEND_DATA;
             }
             else if (eEvent == MASTER_SEND_DATA)
@@ -1494,7 +1495,7 @@ uint8_t UI2C_ReadByteTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t u16Data
 
             if (eEvent == MASTER_SEND_ADDRESS)
             {
-                UI2C_SET_DATA(ui2c, (uint8_t)(u16DataAddr & 0xFF00U) >> 8U);  /* Write Hi byte address of register */
+                UI2C_SET_DATA(ui2c, (uint8_t)((u16DataAddr & 0xFF00U) >> 8U));  /* Write Hi byte address of register */
                 eEvent = MASTER_SEND_DATA;
             }
             else if (eEvent == MASTER_SEND_DATA)
@@ -1608,7 +1609,7 @@ uint32_t UI2C_ReadMultiBytesTwoRegs(UI2C_T *ui2c, uint8_t u8SlaveAddr, uint16_t 
 
             if (eEvent == MASTER_SEND_ADDRESS)
             {
-                UI2C_SET_DATA(ui2c, (uint8_t)(u16DataAddr & 0xFF00U) >> 8U);  /* Write Hi byte address of register */
+                UI2C_SET_DATA(ui2c, (uint8_t)((u16DataAddr & 0xFF00U) >> 8U));  /* Write Hi byte address of register */
                 eEvent = MASTER_SEND_DATA;
             }
             else if (eEvent == MASTER_SEND_DATA)

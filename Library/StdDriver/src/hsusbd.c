@@ -3,7 +3,8 @@
  * @version  V1.00
  * @brief    M480 HSUSBD driver source file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include <stdio.h>
 #include "NuMicro.h"
@@ -45,7 +46,7 @@ static uint8_t g_hsusbd_buf[12];
 static uint8_t g_hsusbd_buf[12] __attribute__((aligned(4)));
 #endif
 
-uint8_t g_hsusbd_Configured = 0ul;
+uint8_t volatile g_hsusbd_Configured = 0ul;
 uint8_t g_hsusbd_CtrlZero = 0ul;
 uint8_t g_hsusbd_UsbAddr = 0ul;
 uint8_t g_hsusbd_ShortPacket = 0ul;
@@ -74,13 +75,18 @@ void HSUSBD_Open(S_HSUSBD_INFO_T *param, HSUSBD_CLASS_REQ pfnClassReq, HSUSBD_SE
     g_hsusbd_CtrlMaxPktSize = g_hsusbd_sInfo->gu8DevDesc[7];
 
     /* Initial USB engine */
-    HSUSBD->PHYCTL |= (HSUSBD_PHYCTL_PHYEN_Msk | HSUSBD_PHYCTL_DPPUEN_Msk);
+    //HSUSBD->PHYCTL |= (HSUSBD_PHYCTL_PHYEN_Msk | HSUSBD_PHYCTL_DPPUEN_Msk);
+    HSUSBD_ENABLE_PHY();
+    while((HSUSBD->BUSINTSTS & HSUSBD_BUSINTEN_PHYCLKVLDIEN_Msk) != HSUSBD_BUSINTEN_PHYCLKVLDIEN_Msk ){}
+    HSUSBD_CLR_SE0();
+
     /* wait PHY clock ready */
     while (1)
     {
         HSUSBD->EP[EPA].EPMPS = 0x20ul;
         if (HSUSBD->EP[EPA].EPMPS == 0x20ul)
         {
+            HSUSBD->EP[EPA].EPMPS = 0x0ul;
             break;
         }
     }
@@ -263,38 +269,24 @@ int HSUSBD_GetDescriptor(void)
     /* Get HID Descriptor */
     case DESC_HID:
     {
+        uint32_t u32ConfigDescOffset;   /* u32ConfigDescOffset is configuration descriptor offset (HID descriptor start index) */
         u32Len = Minimum(u32Len, LEN_HID);
-        HSUSBD_MemCopy(g_hsusbd_buf, &g_hsusbd_sInfo->gu8ConfigDesc[LEN_CONFIG+LEN_INTERFACE], u32Len);
-        HSUSBD_PrepareCtrlIn(g_hsusbd_buf, u32Len);
+        u32ConfigDescOffset = g_hsusbd_sInfo->gu32ConfigHidDescIdx[gUsbCmd.wIndex & 0xfful];
+        HSUSBD_PrepareCtrlIn((uint8_t *)&g_hsusbd_sInfo->gu8ConfigDesc[u32ConfigDescOffset], u32Len);
         break;
     }
     /* Get Report Descriptor */
     case DESC_HID_RPT:
     {
-        if ((HSUSBD->OPER & 0x04ul) == 0x04ul)
+        if (u32Len > g_hsusbd_sInfo->gu32HidReportSize[gUsbCmd.wIndex & 0xfful])
         {
-            if (u32Len > g_hsusbd_sInfo->gu32HidReportSize[gUsbCmd.wIndex & 0xfful])
+            u32Len = g_hsusbd_sInfo->gu32HidReportSize[gUsbCmd.wIndex & 0xfful];
+            if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
             {
-                u32Len = g_hsusbd_sInfo->gu32HidReportSize[gUsbCmd.wIndex & 0xfful];
-                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
-                {
-                    g_hsusbd_CtrlZero = (uint8_t)1ul;
-                }
+                g_hsusbd_CtrlZero = (uint8_t)1ul;
             }
-            HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8HidReportDesc[gUsbCmd.wIndex & 0xfful], u32Len);
         }
-        else
-        {
-            if (u32Len > g_hsusbd_sInfo->gu32FSHidReportSize[gUsbCmd.wIndex & 0xfful])
-            {
-                u32Len = g_hsusbd_sInfo->gu32FSHidReportSize[gUsbCmd.wIndex & 0xfful];
-                if ((u32Len % g_hsusbd_CtrlMaxPktSize) == 0ul)
-                {
-                    g_hsusbd_CtrlZero = (uint8_t)1ul;
-                }
-            }
-            HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8FSHidReportDesc[gUsbCmd.wIndex & 0xfful], u32Len);
-        }
+        HSUSBD_PrepareCtrlIn((uint8_t *)g_hsusbd_sInfo->gu8HidReportDesc[gUsbCmd.wIndex & 0xfful], u32Len);
         break;
     }
     /* Get String Descriptor */

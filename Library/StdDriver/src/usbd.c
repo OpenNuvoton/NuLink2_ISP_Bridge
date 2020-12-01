@@ -3,7 +3,8 @@
  * @version  V1.00
  * @brief    M480 USBD driver source file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <string.h>
@@ -630,9 +631,9 @@ void USBD_CtrlOut(void)
     uint32_t u32Size;
     uint32_t addr;
 
-    if (g_usbd_CtrlOutToggle != (USBD->EPSTS0 & 0xf0))
+    if (g_usbd_CtrlOutToggle != (USBD->EPSTS0 & USBD_EPSTS0_EPSTS1_Msk))
     {
-        g_usbd_CtrlOutToggle = USBD->EPSTS0 & 0xf0;
+        g_usbd_CtrlOutToggle = USBD->EPSTS0 & USBD_EPSTS0_EPSTS1_Msk;
         if (g_usbd_CtrlOutSize < g_usbd_CtrlOutSizeLimit)
         {
             u32Size = USBD_GET_PAYLOAD_LEN(EP1);

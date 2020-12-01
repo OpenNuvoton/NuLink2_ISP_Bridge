@@ -3,7 +3,8 @@
  * @version  V3.00
  * @brief    M480 series I2C driver source file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #include "NuMicro.h"
 
@@ -79,6 +80,11 @@ void I2C_Close(I2C_T *i2c)
     {
         SYS->IPRST1 |= SYS_IPRST1_I2C1RST_Msk;
         SYS->IPRST1 &= ~SYS_IPRST1_I2C1RST_Msk;
+    }
+    else if((uint32_t)i2c == I2C2_BASE)
+    {
+        SYS->IPRST1 |= SYS_IPRST1_I2C2RST_Msk;
+        SYS->IPRST1 &= ~SYS_IPRST1_I2C2RST_Msk;
     }
 
     /* Disable I2C */

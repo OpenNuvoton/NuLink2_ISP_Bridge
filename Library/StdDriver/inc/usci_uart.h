@@ -3,7 +3,8 @@
  * @version  V3.00
  * @brief    M480 series USCI UART (UUART) driver header file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef __USCI_UART_H__
 #define __USCI_UART_H__
@@ -406,6 +407,87 @@ extern "C"
  *    \hideinitializer
  */
 #define UUART_CLR_WAKEUP_FLAG(uuart)    ((uuart)->WKSTS = UUART_WKSTS_WKF_Msk)
+
+/**
+ *    @brief      Trigger RX PDMA function.
+ *
+ *    @param[in]  uuart The pointer of the specified USCI_UART module.
+ *
+ *    @return     None.
+ *
+ *    @details    Set RXPDMAEN bit of UUART_PDMACTL register to enable RX PDMA transfer function.
+ *    \hideinitializer
+ */
+#define UUART_TRIGGER_RX_PDMA(uuart)   ((uuart)->PDMACTL |= UUART_PDMACTL_RXPDMAEN_Msk|UUART_PDMACTL_PDMAEN_Msk)
+
+/**
+ *    @brief      Trigger TX PDMA function.
+ *
+ *    @param[in]  uuart The pointer of the specified USCI_UART module.
+ *
+ *    @return     None.
+ *
+ *    @details    Set TXPDMAEN bit of UUART_PDMACTL register to enable TX PDMA transfer function.
+ *    \hideinitializer
+ */
+#define UUART_TRIGGER_TX_PDMA(uuart)   ((uuart)->PDMACTL |= UUART_PDMACTL_TXPDMAEN_Msk|UUART_PDMACTL_PDMAEN_Msk)
+
+/**
+ *    @brief      Disable RX PDMA transfer.
+ *
+ *    @param[in]  uuart The pointer of the specified USCI_UART module.
+ *
+ *    @return     None.
+ *
+ *    @details    Clear RXPDMAEN bit of UUART_PDMACTL register to disable RX PDMA transfer function.
+ *    \hideinitializer
+ */
+#define UUART_DISABLE_RX_PDMA(uuart) ( (uuart)->PDMACTL &= ~UUART_PDMACTL_RXPDMAEN_Msk )
+
+/**
+ *    @brief      Disable TX PDMA transfer.
+ *
+ *    @param[in]  uuart The pointer of the specified USCI_UART module.
+ *
+ *    @return     None.
+ *
+ *    @details    Clear TXPDMAEN bit of UUART_PDMACTL register to disable TX PDMA transfer function.
+ *    \hideinitializer
+ */
+#define UUART_DISABLE_TX_PDMA(uuart) ( (uuart)->PDMACTL &= ~UUART_PDMACTL_TXPDMAEN_Msk )
+
+
+/**
+ *    @brief        Enable specified USCI_UART PDMA function
+ *
+ *    @param[in]    uuart      The pointer of the specified USCI_UART module
+ *    @param[in]    u32FuncSel Combination of following functions
+ *                             - \ref UUART_PDMACTL_TXPDMAEN_Msk
+ *                             - \ref UUART_PDMACTL_RXPDMAEN_Msk
+ *                             - \ref UUART_PDMACTL_PDMAEN_Msk
+ *
+ *    @return       None
+ *
+ *    \hideinitializer
+ */
+#define UUART_PDMA_ENABLE(uuart, u32FuncSel)   ((uuart)->PDMACTL |= (u32FuncSel))
+
+/**
+ *    @brief        Disable specified USCI_UART PDMA function
+ *
+ *    @param[in]    uuart      The pointer of the specified USCI_UART module
+ *    @param[in]    u32FuncSel Combination of following functions
+ *                             - \ref UUART_PDMACTL_TXPDMAEN_Msk
+ *                             - \ref UUART_PDMACTL_RXPDMAEN_Msk
+ *                             - \ref UUART_PDMACTL_PDMAEN_Msk
+ *
+ *    @return       None
+ *
+ *    \hideinitializer
+ */
+#define UUART_PDMA_DISABLE(uuart, u32FuncSel)   ((uuart)->PDMACTL &= ~(u32FuncSel))
+
+
 
 
 void UUART_ClearIntFlag(UUART_T* uuart, uint32_t u32Mask);

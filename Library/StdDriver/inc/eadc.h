@@ -3,7 +3,8 @@
  * @version  V0.10
  * @brief    M480 series EADC driver header file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef __EADC_H__
 #define __EADC_H__
@@ -52,18 +53,20 @@ extern "C"
 #define EADC_TIMER1_TRIGGER                 (5UL<<EADC_SCTL_TRGSEL_Pos)      /*!< Timer1 overflow pulse trigger \hideinitializer */
 #define EADC_TIMER2_TRIGGER                 (6UL<<EADC_SCTL_TRGSEL_Pos)      /*!< Timer2 overflow pulse trigger \hideinitializer */
 #define EADC_TIMER3_TRIGGER                 (7UL<<EADC_SCTL_TRGSEL_Pos)      /*!< Timer3 overflow pulse trigger \hideinitializer */
-#define EADC_PWM0TG0_TRIGGER                (8UL<<EADC_SCTL_TRGSEL_Pos)      /*!< PWM0TG0 trigger \hideinitializer */
-#define EADC_PWM0TG1_TRIGGER                (9UL<<EADC_SCTL_TRGSEL_Pos)      /*!< PWM0TG1 trigger \hideinitializer */
-#define EADC_PWM0TG2_TRIGGER                (0xAUL<<EADC_SCTL_TRGSEL_Pos)    /*!< PWM0TG2 trigger \hideinitializer */
-#define EADC_PWM0TG3_TRIGGER                (0xBUL<<EADC_SCTL_TRGSEL_Pos)    /*!< PWM0TG3 trigger \hideinitializer */
-#define EADC_PWM0TG4_TRIGGER                (0xCUL<<EADC_SCTL_TRGSEL_Pos)    /*!< PWM0TG4 trigger \hideinitializer */
-#define EADC_PWM0TG5_TRIGGER                (0xDUL<<EADC_SCTL_TRGSEL_Pos)    /*!< PWM0TG5 trigger \hideinitializer */
-#define EADC_PWM1TG0_TRIGGER                (0xEUL<<EADC_SCTL_TRGSEL_Pos)    /*!< PWM1TG0 trigger \hideinitializer */
-#define EADC_PWM1TG1_TRIGGER                (0xFUL<<EADC_SCTL_TRGSEL_Pos)    /*!< PWM1TG1 trigger \hideinitializer */
-#define EADC_PWM1TG2_TRIGGER                (0x10UL<<EADC_SCTL_TRGSEL_Pos)   /*!< PWM1TG2 trigger \hideinitializer */
-#define EADC_PWM1TG3_TRIGGER                (0x11UL<<EADC_SCTL_TRGSEL_Pos)   /*!< PWM1TG3 trigger \hideinitializer */
-#define EADC_PWM1TG4_TRIGGER                (0x12UL<<EADC_SCTL_TRGSEL_Pos)   /*!< PWM1TG4 trigger \hideinitializer */
-#define EADC_PWM1TG5_TRIGGER                (0x13UL<<EADC_SCTL_TRGSEL_Pos)   /*!< PWM1TG5 trigger \hideinitializer */
+#define EADC_EPWM0TG0_TRIGGER               (8UL<<EADC_SCTL_TRGSEL_Pos)      /*!< EPWM0TG0 trigger \hideinitializer */
+#define EADC_EPWM0TG1_TRIGGER               (9UL<<EADC_SCTL_TRGSEL_Pos)      /*!< EPWM0TG1 trigger \hideinitializer */
+#define EADC_EPWM0TG2_TRIGGER               (0xAUL<<EADC_SCTL_TRGSEL_Pos)    /*!< EPWM0TG2 trigger \hideinitializer */
+#define EADC_EPWM0TG3_TRIGGER               (0xBUL<<EADC_SCTL_TRGSEL_Pos)    /*!< EPWM0TG3 trigger \hideinitializer */
+#define EADC_EPWM0TG4_TRIGGER               (0xCUL<<EADC_SCTL_TRGSEL_Pos)    /*!< EPWM0TG4 trigger \hideinitializer */
+#define EADC_EPWM0TG5_TRIGGER               (0xDUL<<EADC_SCTL_TRGSEL_Pos)    /*!< EPWM0TG5 trigger \hideinitializer */
+#define EADC_EPWM1TG0_TRIGGER               (0xEUL<<EADC_SCTL_TRGSEL_Pos)    /*!< EPWM1TG0 trigger \hideinitializer */
+#define EADC_EPWM1TG1_TRIGGER               (0xFUL<<EADC_SCTL_TRGSEL_Pos)    /*!< EPWM1TG1 trigger \hideinitializer */
+#define EADC_EPWM1TG2_TRIGGER               (0x10UL<<EADC_SCTL_TRGSEL_Pos)   /*!< EPWM1TG2 trigger \hideinitializer */
+#define EADC_EPWM1TG3_TRIGGER               (0x11UL<<EADC_SCTL_TRGSEL_Pos)   /*!< EPWM1TG3 trigger \hideinitializer */
+#define EADC_EPWM1TG4_TRIGGER               (0x12UL<<EADC_SCTL_TRGSEL_Pos)   /*!< EPWM1TG4 trigger \hideinitializer */
+#define EADC_EPWM1TG5_TRIGGER               (0x13UL<<EADC_SCTL_TRGSEL_Pos)   /*!< EPWM1TG5 trigger \hideinitializer */
+#define EADC_BPWM0TG_TRIGGER                (0x14UL<<EADC_SCTL_TRGSEL_Pos)   /*!< BPWM0TG trigger \hideinitializer */
+#define EADC_BPWM1TG_TRIGGER                (0x15UL<<EADC_SCTL_TRGSEL_Pos)   /*!< BPWM1TG trigger \hideinitializer */
 
 #define EADC_SCTL_TRGDLYDIV_DIVIDER_1       (0<<EADC_SCTL_TRGDLYDIV_Pos)           /*!< Trigger delay clock frequency is ADC_CLK/1 \hideinitializer */
 #define EADC_SCTL_TRGDLYDIV_DIVIDER_2       (0x1UL<<EADC_SCTL_TRGDLYDIV_Pos)       /*!< Trigger delay clock frequency is ADC_CLK/2 \hideinitializer */
@@ -118,6 +121,29 @@ extern "C"
   * \hideinitializer
   */
 #define EADC_DISABLE_PDMA(eadc) ((eadc)->CTL &= (~EADC_CTL_PDMAEN_Msk))
+
+/**
+  * @brief Enable Sample Module PDMA transfer.
+  * @param[in] eadc The pointer of the specified EADC module.
+  * @param[in] u32ModuleMask the combination of sample module interrupt status bits. Each bit corresponds to a sample module interrupt status.
+  *                          This parameter decides which sample module interrupts will be disabled, valid range are between 1~0x7FFFF.
+  * @return None
+  * @details When A/D conversion is completed, the converted data is loaded into EADC_DATn (n: 0 ~ 18) register,
+  *         user can enable this bit to generate a PDMA data transfer request.
+  * \hideinitializer
+  */
+#define EADC_ENABLE_SAMPLE_MODULE_PDMA(eadc, u32ModuleMask) ((eadc)->PDMACTL |= u32ModuleMask)
+
+/**
+  * @brief Disable Sample Module PDMA transfer.
+  * @param[in] eadc The pointer of the specified EADC module.
+  * @param[in] u32ModuleMask the combination of sample module interrupt status bits. Each bit corresponds to a sample module interrupt status.
+  *                          This parameter decides which sample module interrupts will be disabled, valid range are between 1~0x7FFFF.
+  * @return None
+  * @details This macro is used to disable sample module PDMA transfer.
+  * \hideinitializer
+  */
+#define EADC_DISABLE_SAMPLE_MODULE_PDMA(eadc, u32ModuleMask) ((eadc)->PDMACTL &= (~u32ModuleMask))
 
 /**
   * @brief Enable double buffer mode.
@@ -407,11 +433,12 @@ extern "C"
                          u32ModuleNum,\
                          u32Condition,\
                          u16CMPData,\
-                         u32MatchCount) ((eadc)->CMP[0] |=(((u32ModuleNum) << EADC_CMP_CMPSPL_Pos)|\
+                         u32MatchCount) ((eadc)->CMP[0] = (((eadc)->CMP[0] & ~(EADC_CMP_CMPSPL_Msk|EADC_CMP_CMPCOND_Msk|EADC_CMP_CMPDAT_Msk|EADC_CMP_CMPMCNT_Msk))|\
+                                                            (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos)|\
                                                             (u32Condition) |\
                                                             ((u16CMPData) << EADC_CMP_CMPDAT_Pos)| \
                                                             (((u32MatchCount) - 1) << EADC_CMP_CMPMCNT_Pos)|\
-                                                            EADC_CMP_ADCMPEN_Msk))
+                                                            EADC_CMP_ADCMPEN_Msk)))
 
 /**
   * @brief Configure the comparator 1 and enable it.
@@ -432,11 +459,12 @@ extern "C"
                          u32ModuleNum,\
                          u32Condition,\
                          u16CMPData,\
-                         u32MatchCount) ((eadc)->CMP[1] |=(((u32ModuleNum) << EADC_CMP_CMPSPL_Pos)|\
+                         u32MatchCount) ((eadc)->CMP[1] = (((eadc)->CMP[1] & ~(EADC_CMP_CMPSPL_Msk|EADC_CMP_CMPCOND_Msk|EADC_CMP_CMPDAT_Msk|EADC_CMP_CMPMCNT_Msk))|\
+                                                            (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos)|\
                                                             (u32Condition) |\
                                                             ((u16CMPData) << EADC_CMP_CMPDAT_Pos)| \
                                                             (((u32MatchCount) - 1) << EADC_CMP_CMPMCNT_Pos)|\
-                                                            EADC_CMP_ADCMPEN_Msk))
+                                                            EADC_CMP_ADCMPEN_Msk)))
 
 /**
   * @brief Configure the comparator 2 and enable it.
@@ -457,11 +485,12 @@ extern "C"
                          u32ModuleNum,\
                          u32Condition,\
                          u16CMPData,\
-                         u32MatchCount) ((eadc)->CMP[2] |=(((u32ModuleNum) << EADC_CMP_CMPSPL_Pos)|\
+                         u32MatchCount) ((eadc)->CMP[2] = (((eadc)->CMP[2] & ~(EADC_CMP_CMPSPL_Msk|EADC_CMP_CMPCOND_Msk|EADC_CMP_CMPDAT_Msk|EADC_CMP_CMPMCNT_Msk))|\
+                                                            (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos)|\
                                                             (u32Condition) |\
                                                             ((u16CMPData) << EADC_CMP_CMPDAT_Pos)| \
                                                             (((u32MatchCount) - 1) << EADC_CMP_CMPMCNT_Pos)|\
-                                                            EADC_CMP_ADCMPEN_Msk))
+                                                            EADC_CMP_ADCMPEN_Msk)))
 
 /**
   * @brief Configure the comparator 3 and enable it.
@@ -482,11 +511,12 @@ extern "C"
                          u32ModuleNum,\
                          u32Condition,\
                          u16CMPData,\
-                         u32MatchCount) ((eadc)->CMP[3] |=(((u32ModuleNum) << EADC_CMP_CMPSPL_Pos)|\
+                         u32MatchCount) ((eadc)->CMP[3] = (((eadc)->CMP[3] & ~(EADC_CMP_CMPSPL_Msk|EADC_CMP_CMPCOND_Msk|EADC_CMP_CMPDAT_Msk|EADC_CMP_CMPMCNT_Msk))|\
+                                                            (((u32ModuleNum) << EADC_CMP_CMPSPL_Pos)|\
                                                             (u32Condition) |\
                                                             ((u16CMPData) << EADC_CMP_CMPDAT_Pos)| \
                                                             (((u32MatchCount) - 1) << EADC_CMP_CMPMCNT_Pos)|\
-                                                            EADC_CMP_ADCMPEN_Msk))
+                                                            EADC_CMP_ADCMPEN_Msk)))
 
 /**
   * @brief Enable the compare window mode.

@@ -3,7 +3,8 @@
  * @version  V3.00
  * @brief    M480 series SPI driver source file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #include "NuMicro.h"
 
@@ -491,8 +492,8 @@ uint32_t SPI_SetBusClock(SPI_T *spi, uint32_t u32BusClock)
 /**
   * @brief  Configure FIFO threshold setting.
   * @param[in]  spi The pointer of the specified SPI module.
-  * @param[in]  u32TxThreshold Decides the TX FIFO threshold. It could be 0 ~ 3.
-  * @param[in]  u32RxThreshold Decides the RX FIFO threshold. It could be 0 ~ 3.
+  * @param[in]  u32TxThreshold Decides the TX FIFO threshold. It could be 0 ~ 3. If data width is 8~16 bits, it could be 0 ~ 7.
+  * @param[in]  u32RxThreshold Decides the RX FIFO threshold. It could be 0 ~ 3. If data width is 8~16 bits, it could be 0 ~ 7.
   * @return None
   * @details Set TX FIFO threshold and RX FIFO threshold configurations.
   */
@@ -1159,7 +1160,7 @@ uint32_t SPII2S_Open(SPI_T *i2s, uint32_t u32MasterSlave, uint32_t u32SampleRate
     /* Configure I2S controller */
     i2s->I2SCTL = u32MasterSlave | u32WordWidth | u32Channels | u32DataFormat;
     /* Set TX FIFO threshold to 2 and RX FIFO threshold to 1 */
-    i2s->FIFOCTL = SPII2S_FIFO_TX_LEVEL_WORD_2 | SPII2S_FIFO_RX_LEVEL_WORD_2;
+    SPI_SetFIFO(i2s, 2, 1);
 
     if(u32MasterSlave == SPI_MASTER)
     {

@@ -3,7 +3,8 @@
  * @version  V3.00
  * @brief    M480 series USCI_SPI driver header file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 #ifndef __USCI_SPI_H__
 #define __USCI_SPI_H__
@@ -137,7 +138,7 @@ extern "C"
   */
 #define USPI_SET_SS_HIGH(uspi) \
     do{ \
-        (uspi)->LINECTL |= (USPI_LINECTL_CTLOINV_Msk); \
+        (uspi)->LINECTL &= ~(USPI_LINECTL_CTLOINV_Msk); \
         (uspi)->PROTCTL = ((uspi)->PROTCTL & ~(USPI_PROTCTL_AUTOSS_Msk | USPI_PROTCTL_SS_Msk)); \
     }while(0)
 
@@ -361,6 +362,15 @@ extern "C"
 #define USPI_TRIGGER_TX_PDMA(uspi)   ((uspi)->PDMACTL |= USPI_PDMACTL_TXPDMAEN_Msk|USPI_PDMACTL_PDMAEN_Msk)
 
 /**
+  * @brief      Trigger TX and RX PDMA function.
+  * @param[in]  uspi The pointer of the specified USCI_SPI module.
+  * @return     None.
+  * @details    Set TXPDMAEN bit and RXPDMAEN bit of USPI_PDMACTL register to enable TX and RX PDMA transfer function.
+  * \hideinitializer
+  */
+#define USPI_TRIGGER_TX_RX_PDMA(uspi)   ((uspi)->PDMACTL |= USPI_PDMACTL_TXPDMAEN_Msk|USPI_PDMACTL_RXPDMAEN_Msk|USPI_PDMACTL_PDMAEN_Msk)
+
+/**
   * @brief      Disable RX PDMA transfer.
   * @param[in]  uspi The pointer of the specified USCI_SPI module.
   * @return     None.
@@ -377,6 +387,15 @@ extern "C"
   * \hideinitializer
   */
 #define USPI_DISABLE_TX_PDMA(uspi) ( (uspi)->PDMACTL &= ~USPI_PDMACTL_TXPDMAEN_Msk )
+
+/**
+  * @brief      Disable TX and RX PDMA transfer.
+  * @param[in]  uspi The pointer of the specified USCI_SPI module.
+  * @return     None.
+  * @details    Clear TXPDMAEN bit and RXPDMAEN bit of USPI_PDMACTL register to disable TX and RX PDMA transfer function.
+  * \hideinitializer
+  */
+#define USPI_DISABLE_TX_RX_PDMA(uspi) ( (uspi)->PDMACTL &= ~(USPI_PDMACTL_TXPDMAEN_Msk | USPI_PDMACTL_RXPDMAEN_Msk))
 
 uint32_t USPI_Open(USPI_T *uspi, uint32_t u32MasterSlave, uint32_t u32SPIMode,  uint32_t u32DataWidth, uint32_t u32BusClock);
 void USPI_Close(USPI_T *uspi);

@@ -3,7 +3,8 @@
  * @version  V3.00
  * @brief    M480 series UART driver source file
  *
- * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
 *****************************************************************************/
 
 #include <stdio.h>
@@ -27,7 +28,7 @@
  *    @param[in]    uart                The pointer of the specified UART module.
  *    @param[in]    u32InterruptFlag    The specified interrupt of UART module.
  *                                      - \ref UART_INTSTS_LININT_Msk    : LIN bus interrupt
- *                                      - \ref UART_INTEN_WKIEN_Msk      : Wake-up interrupt
+ *                                      - \ref UART_INTSTS_WKIF_Msk      : Wake-up interrupt
  *                                      - \ref UART_INTSTS_BUFERRINT_Msk : Buffer Error interrupt
  *                                      - \ref UART_INTSTS_MODEMINT_Msk  : Modem Status interrupt
  *                                      - \ref UART_INTSTS_RLSINT_Msk    : Receive Line Status interrupt
@@ -616,7 +617,7 @@ uint32_t UART_Write(UART_T* uart, uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
     for(u32Count = 0ul; u32Count != u32WriteBytes; u32Count++)
     {
         u32delayno = 0ul;
-        while((uart->FIFOSTS & UART_FIFOSTS_TXEMPTYF_Msk) == 0ul)   /* Wait Tx empty and Time-out manner */
+        while(uart->FIFOSTS & UART_FIFOSTS_TXFULL_Msk)   /* Check Tx Full */
         {
             u32delayno++;
             if(u32delayno >= 0x40000000ul)
@@ -640,7 +641,6 @@ uint32_t UART_Write(UART_T* uart, uint8_t pu8TxBuf[], uint32_t u32WriteBytes)
     }
 
     return u32Count;
-
 }
 
 

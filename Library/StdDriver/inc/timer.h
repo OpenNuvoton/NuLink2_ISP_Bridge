@@ -3,7 +3,8 @@
  * @version  V1.00
  * @brief    M480 series Timer Controller(Timer) driver header file
  *
- * @copyright (C) 2017 Nuvoton Technology Corp. All rights reserved.
+ * SPDX-License-Identifier: Apache-2.0
+ * @copyright (C) 2016-2020 Nuvoton Technology Corp. All rights reserved.
  *****************************************************************************/
 #ifndef __TIMER_H__
 #define __TIMER_H__
@@ -118,6 +119,21 @@ extern "C"
   * \hideinitializer
   */
 #define TIMER_SELECT_TOUT_PIN(timer, u32ToutSel)    ((timer)->CTL = ((timer)->CTL & ~TIMER_CTL_TGLPINSEL_Msk) | (u32ToutSel))
+
+/**
+  * @brief      Select Timer operating mode
+  *
+  * @param[in]  timer       The pointer of the specified Timer module. It could be TIMER0, TIMER1, TIMER2, TIMER3.
+  * @param[in]  u32OpMode   Operation mode. Possible options are
+  *                         - \ref TIMER_ONESHOT_MODE
+  *                         - \ref TIMER_PERIODIC_MODE
+  *                         - \ref TIMER_TOGGLE_MODE
+  *                         - \ref TIMER_CONTINUOUS_MODE
+  *
+  * @return     None
+  * \hideinitializer
+  */
+#define TIMER_SET_OPMODE(timer, u32OpMode)   ((timer)->CTL = ((timer)->CTL & ~TIMER_CTL_OPMODE_Msk) | (u32OpMode))
 
 /* Declare these inline functions here to avoid MISRA C 2004 rule 8.1 error */
 __STATIC_INLINE void TIMER_Start(TIMER_T *timer);

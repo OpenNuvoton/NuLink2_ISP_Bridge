@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>ISP_Bridge_HID20</TargetName>
+      <TargetName>NuLink2_ISP_Bridge</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>-1</TargetSelection>
+          <TargetSelection>19</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -411,7 +411,7 @@
             <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--map --first='startup_M480_user.o(RESET)' --datacompressor=off --info=inline --entry Reset_Handler</Misc>
+            <Misc>--map --first='startup_M480.o(RESET)' --datacompressor=off --info=inline --entry Reset_Handler</Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -425,6 +425,11 @@
               <FileName>system_M480.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Library\Device\Nuvoton\M480\Source\system_M480.c</FilePath>
+            </File>
+            <File>
+              <FileName>startup_M480.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\Library\Device\Nuvoton\M480\Source\ARM\startup_M480.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -447,19 +452,9 @@
               <FilePath>..\ISP_HID_20\hid_transfer.c</FilePath>
             </File>
             <File>
-              <FileName>hsusbd_user.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\ISP_HID_20\hsusbd_user.c</FilePath>
-            </File>
-            <File>
               <FileName>isp_bridge.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\isp_bridge.c</FilePath>
-            </File>
-            <File>
-              <FileName>startup_M480_user.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\startup_M480_user.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -475,6 +470,11 @@
               <FileName>usci_i2c.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Library\StdDriver\src\usci_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>hsusbd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Library\StdDriver\src\hsusbd.c</FilePath>
             </File>
           </Files>
         </Group>

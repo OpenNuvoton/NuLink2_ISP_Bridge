@@ -45,31 +45,17 @@ void SYS_Init(void)
     CyclesPerUs     = (SystemCoreClock + 500000UL) / 1000000UL; // For SYS_SysTickDelay()
 }
 
-extern uint8_t bUsbDataReady;
-void USBD20_IRQHandler(void);
-
 int32_t main(void)
 {
     SYS_Init();
-    HSUSBD_ENABLE_PHY();
-
-    /* wait PHY clock ready */
-    while (1) {
-        HSUSBD->EP[EPA].EPMPS = 0x20ul;
-
-        if (HSUSBD->EP[EPA].EPMPS == 0x20ul) {
-            break;
-        }
-    }
-
-    /* Force SE0, and then clear it to connect*/
-    HSUSBD_SET_SE0();
+    HSUSBD_Open(&gsHSInfo, HID_ClassRequest, NULL);
+    HSUSBD_SetVendorRequest(HID_VendorRequest);
     /* Endpoint configuration */
     HID_Init();
     /* Enable USBD interrupt */
     NVIC_EnableIRQ(USBD20_IRQn);
     /* Start transaction */
-    HSUSBD_CLR_SE0();
+    HSUSBD_Start();
     ISP_Bridge_Init();
 
     while (1) {

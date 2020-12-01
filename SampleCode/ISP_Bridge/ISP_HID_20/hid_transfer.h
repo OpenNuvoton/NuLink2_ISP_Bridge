@@ -1,11 +1,9 @@
-/**************************************************************************//**
- * @file     hid_transfer.h
+/***************************************************************************//**
+ * @file     usbd_hid.h
  * @brief    M480 USB driver header file
  * @version  2.0.0
- * @date     22, Aug, 2016
  *
- * @note
- * Copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
+ * @copyright (C) 2016 Nuvoton Technology Corp. All rights reserved.
  ******************************************************************************/
 #ifndef __USBD_HID_H__
 #define __USBD_HID_H__
@@ -35,8 +33,11 @@
 /*-------------------------------------------------------------*/
 /* Define EP maximum packet size */
 #define CEP_MAX_PKT_SIZE        64
+#define CEP_OTHER_MAX_PKT_SIZE  64
 #define EPA_MAX_PKT_SIZE        64
+#define EPA_OTHER_MAX_PKT_SIZE  64
 #define EPB_MAX_PKT_SIZE        64
+#define EPB_OTHER_MAX_PKT_SIZE  64
 
 #define CEP_BUF_BASE    0
 #define CEP_BUF_LEN     CEP_MAX_PKT_SIZE
@@ -58,12 +59,6 @@
 /*-------------------------------------------------------------*/
 
 extern uint8_t  g_u8OutBuff[];
-extern uint8_t HID_DeviceReportDescriptor[];
-extern uint8_t gu8DeviceDescriptor[];
-extern uint8_t gu8ConfigDescriptor[];
-extern uint8_t gu8StringLang[4];
-extern uint8_t gu8VendorStringDesc[];
-extern uint8_t gu8ProductStringDesc[];
 
 /*-------------------------------------------------------------*/
 void HID_Init(void);
